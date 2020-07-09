@@ -32,11 +32,13 @@ HolocronModuleRegisterPlugin.prototype.apply = function apply(compiler) {
           .forEach((file) => {
             // eslint-disable-next-line no-param-reassign
             compilation.assets[file] = new ConcatSource(
-              '(function() {',
+              "(function() {document.querySelector('[data-preload=true]').addEventListener('load', init); function init(){",
               '\n',
               compilation.assets[file],
               '\n',
-              `Holocron.registerModule("${moduleName}", holocronModule);})();`
+              `Holocron.registerModule("${moduleName}", holocronModule);`,
+              '\n',
+              '}})();'
             );
           });
       });
